@@ -2,6 +2,8 @@
 
 local_bin=$HOME/.local/bin  
 
+PATH=$PATH:/bin
+
 set -euo pipefail
 
 #  
