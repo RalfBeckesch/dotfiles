@@ -155,3 +155,21 @@ if [[ "$TERM" == "xterm" ]]; then
     # Append to PROMPT_COMMAND to call precmd before displaying the prompt
     PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }precmd"
 fi
+
+
+
+if [ "$(hostname -f)" == "ralf-21kscto1ww" ]; then
+	export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
+fi
+
+
+# if user is not root, pass all commands via sudo #
+if [ $UID -ne 0 ]; then
+    alias reboot='sudo reboot'
+    alias update='sudo apt-get upgrade'
+fi
+
+
+
+
+
