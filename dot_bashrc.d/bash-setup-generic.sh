@@ -47,18 +47,6 @@ if ! shopt -oq posix; then
 fi
 
 
-
-
-bashrcd_only="aaa bbb ccc"
-bashrcd_exlcude="ddd eee fff"
-
-for src in ~/.bashrc.d/*; do
-  if [ -e "$src" ]; then
-    echo . $src
-  fi
-done
-
-
 # Do something only on specific hosts
 
 only_at_home="ralf-21kscto1ww"

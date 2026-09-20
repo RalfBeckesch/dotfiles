@@ -1,2 +1,0 @@
-PROMPT_DIRTRIM=2
-
