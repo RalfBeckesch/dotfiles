@@ -165,14 +165,13 @@ fi
 
 # if user is not root, pass all commands via sudo #
 if [ $UID -ne 0 ]; then
+	alias pacman='sudo pacman'
 	alias reboot='sudo reboot'
 	alias update='sudo apt-get upgrade'
 	alias apt-get="sudo apt-get"
 	alias updatey="sudo apt-get --yes"
 	# update on one command
 	alias update='sudo apt-get update && sudo apt-get upgrade'
-
-
 fi
 
 ## cd specific
@@ -213,10 +212,10 @@ alias nowtime=now
 alias nowdate='date +"%d-%m-%Y"'
 
 # Set vim as default
-alias vi=vim
-alias svi='sudo vi'
-alias vis='vim "+set si"'
-alias edit='vim'
+alias vi=nvim
+# alias svi='sudo vi'
+# alias vis='vim "+set si"'
+# alias edit='vim'
 
 # Control output of networking tool called ping
 # 	Stop after sending count ECHO_REQUEST packets #
@@ -242,19 +241,28 @@ alias chgrp='chgrp --preserve-root'
 
 # Get system memory, cpu usage, and gpu memory info quickly
 #	# pass options to free ##
-alias meminfo='free -m -l -t'
+# alias meminfo='free -m -l -t'
 #	# get top process eating memory
-alias psmem='ps auxf | sort -nr -k 4'
-alias psmem10='ps auxf | sort -nr -k 4 | head -10' 
+# alias psmem='ps auxf | sort -nr -k 4'
+# alias psmem10='ps auxf | sort -nr -k 4 | head -10' 
 #	# get top process eating cpu ##
-alias pscpu='ps auxf | sort -nr -k 3'
-alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+# alias pscpu='ps auxf | sort -nr -k 3'
+# alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
 #	# Get server cpu info ##
-alias cpuinfo='lscpu'
+# alias cpuinfo='lscpu'
 #	# older system use /proc/cpuinfo ##
 ##alias cpuinfo='less /proc/cpuinfo' ## 
 #	# get GPU ram on desktop / laptop##
-alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
+# alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
 
 
+bashrcDir=".bashrc.d"
+if [ -d "$bashrcDir" ]; then
+	for ext in $bashrcDir/*sh; do
+		if [ -d "ext" ]; then
+			echo include "$ext"
+			. $ext
+		fi
+	done
+fi
 
