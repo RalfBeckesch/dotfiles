@@ -36,7 +36,7 @@ The numbered files in `dot_bashrc.d/` are sourced in this order:
 5. `200-networking.sh` – networking aliases and helpers
 6. `300-shell-safety-nets.sh` – safety nets (e.g. safer aliases)
 
-Files with a `.sh-off` suffix (e.g. `mybashrc.sh-off`) are intentionally not loaded.
+Files with a suffix not equal to `.sh` (e.g. `mybashrc.sh-off`) are intentionally not loaded.
 
 ## Common workflows
 
