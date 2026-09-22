@@ -1,3 +1,3 @@
-if [ -n "$(which devpod)" ]; then
+if [ -n "$(command -v devpod)" ]; then
 	eval "$(devpod completion bash)"
 fi

@@ -1,5 +1,5 @@
 cmd=kubectl
-if [ -n "$(which $cmd)" ]; then
+if [ -n "$(command -v $cmd)" ]; then
 	alias k='kubectl'
 	source <(kubectl completion bash)
 	complete -o default -F __start_kubectl k

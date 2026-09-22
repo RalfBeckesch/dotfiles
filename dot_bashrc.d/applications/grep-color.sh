@@ -12,15 +12,15 @@ debug "Colorizing grep aliases."
 
 ## Colorize the grep command output for ease of use (good for log files)##
 
-if [ -n "$(which grep)" ]; then
+if [ -n "$(command -v grep)" ]; then
     alias grep='grep --color=auto'
 fi
 
-if [ -n "$(which grep)" ]; then
+if [ -n "$(command -v grep)" ]; then
     alias egrep='egrep --color=auto'
 fi
 
-if [ -n "$(which grep)" ]; then
+if [ -n "$(command -v grep)" ]; then
     alias fgrep='fgrep --color=auto'
 fi
 

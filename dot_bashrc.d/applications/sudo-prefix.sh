@@ -14,7 +14,7 @@ function alias_prefix_sudo_if_exists() {
 
 if [ $UID -ne 0 ]; then
     debug "I am not 'root'."
-    if [ -n "$(which sudo)" ]; then
+    if [ -n "$(command -v sudo)" ]; then
         debug "sudo is installed."
         alias_prefix_sudo_if_exists reboot
         alias_prefix_sudo_if_exists apt-get
