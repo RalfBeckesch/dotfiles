@@ -11,10 +11,6 @@ HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
 shopt -s histappend
-#!/bin/bash
-DEBUG=1
-[ -n "$DEBUG" ] && echo debug $0 >&2
-
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=10000

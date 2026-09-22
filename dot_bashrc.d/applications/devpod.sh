@@ -1,3 +1,3 @@
 if [ -n "$(which devpod)" ]; then
-	source <(devpod completion bash)
+	eval "$(devpod completion bash)"
 fi

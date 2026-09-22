@@ -2,17 +2,12 @@
 scriptname=$(basename ${BASH_SOURCE[0]})
 scriptdirname=$(dirname ${BASH_SOURCE[0]})
 
-function debug () {
-    if [ -n "$DEBUG" ]; then
-        echo -e "$*" >&2
-    fi
-}
-
 function alias_prefix_sudo_if_exists() {
     cmd="$1"
     shift
     opts="$*"
-    if [ -n "$(which cmd)" ]; then
+    debug "cmd='$cmd' opt='$opts'"
+    if [ -n "$(command -v $cmd)" ]; then
         alias $cmd="sudo $cmd $opts"
     fi
 }
