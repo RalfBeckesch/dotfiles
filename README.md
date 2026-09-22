@@ -20,7 +20,7 @@ and applies the dotfiles if that hasn't happened yet.
 | --- | --- |
 | `dot_bashrc` | Entry point for `~/.bashrc`; loads all snippets from `~/.bashrc.d` (interactive shells only) |
 | `dot_bashrc.d/` | Modular bash config snippets, loaded in alphabetical/numeric order |
-| `dot_bashrc.d/applications/` | Application-specific aliases and additions (e.g. chezmoi, kubernetes, devpod, containerlab, starship, ssh, lsd) |
+| `dot_bashrc.d/applications/` | Application-specific aliases and additions, loaded by `150-applications.sh` (cd, chezmoi, containerlab, date, devpod, grep, kubernetes, ls/lsd, mkdir, ssh, starship, sudo, vi/nvim) |
 | `dot_config/` | Config files under `~/.config/` (e.g. symlink to `starship.toml`) |
 | `empty_dot_bash_aliases` | Empty `~/.bash_aliases` file (placeholder) |
 | `setup.sh` | Bootstrap script: installs chezmoi and applies the repository |
@@ -31,9 +31,10 @@ The numbered files in `dot_bashrc.d/` are sourced in this order:
 
 1. `000-bash-setup-generic.sh` – basic shell setup
 2. `010-bash-account-specific.sh` – account-/machine-specific settings
-3. `100-generic-aliases.sh` / `100-applications.sh` – general aliases, loads the snippets in `applications/`
-4. `200-networking.sh` – networking aliases and helpers
-5. `300-shell-safety-nets.sh` – safety nets (e.g. safer aliases)
+3. `100-generic-aliases.sh` – general aliases
+4. `150-applications.sh` – loads all snippets in `applications/`
+5. `200-networking.sh` – networking aliases and helpers
+6. `300-shell-safety-nets.sh` – safety nets (e.g. safer aliases)
 
 Files with a `.sh-off` suffix (e.g. `mybashrc.sh-off`) are intentionally not loaded.
 
