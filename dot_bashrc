@@ -19,16 +19,16 @@ if [ -f "$bashrc_debug" ]; then
 	debug "Debug enabled."
 fi
 
-bashrcDir="$HOME/.bashrc.d"
-debug "bashrcDir: '$bashrcDir'"
-if [ -d "$bashrcDir" ]; then
-	for ext in $bashrcDir/*sh; do
+BASHRC_DIR="$HOME/.bashrc.d"
+debug "BASHRC_DIR: '$BASHRC_DIR'"
+if [ -d "$BASHRC_DIR" ]; then
+	for ext in $BASHRC_DIR/*sh; do
 		if [ -f "$ext" ]; then
 			debug "include '$ext'"
 			. $ext
 		fi
 	done
 else
-	debug"bashrcDir: '$bashrcDir' NOT FOUND!"
+	debug"BASHRC_DIR: '$BASHRC_DIR' NOT FOUND!"
 fi
 
