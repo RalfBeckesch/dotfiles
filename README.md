@@ -6,13 +6,24 @@ The repository lives at `git.beckesch.it:beckesch/dotfiles.git` and is kept loca
 under `~/.local/share/chezmoi`.
 
 ## Quick start (new machine)
+### Install script from chezmoi.io
 
 ```sh
 sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply git@git.beckesch.it:beckesch/dotfiles.git
 ```
 
+### Install with your distros or cross-platform package manager first...
+...then initialize chezmoi with the repository
+
+```
+chezmoi init git@git.beckesch.it:beckesch/dotfiles.git
+```
+### Autosetup the files inside your devpods
+
 Alternatively, use the `setup.sh` script in this repository, which installs chezmoi
 and applies the dotfiles if that hasn't happened yet. The `setup.sh` is intended to be used as `devpod` quick setup.
+
+see `setup.sh`
 
 ### Use your distros package manager
 ```
