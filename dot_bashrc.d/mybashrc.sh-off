@@ -2,5 +2,5 @@
 mybashrc=~/bin/mybashrc
 
 if [ -e "$mybashrc" ]; then
-	. $mybashrc
+	echo . $mybashrc
 fi

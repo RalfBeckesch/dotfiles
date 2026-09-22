@@ -1,3 +1,9 @@
+#!/bin/bash
+scriptname=$(basename ${BASH_SOURCE[0]})
+scriptdirname=$(dirname ${BASH_SOURCE[0]})
+
+debug "Setup bash config."
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -22,16 +28,10 @@ shopt -s checkwinsize
 # match all files and zero or more directories and subdirectories.
 #shopt -s globstar
 
-# make less more friendly for non-text input files, see lesspipe(1)
-#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+BASH_ALIASES="~/.bash_aliases"
+if [ -f "$BASH_ALIASES" ]; then
+    debug "Loading '$BASH_ALIASES'."
+    . $BASH_ALIASES
 fi
 
 
@@ -40,19 +40,16 @@ fi
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
+    BASH_COMPLETION=/usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
+    BASH_COMPLETION=/etc/bash_completion
+  fi
+  if [ -n "$BASH_COMPLETION" ]; then
+    debug "Loading bash completion '$BASH_COMPLETION'."
+    . $BASH_COMPLETION
   fi
 fi
 
-
-# Do something only on specific hosts
-
-only_at_home="ralf-21kscto1ww"
-if [ "$(hostname -f)" == "ralf-21kscto1ww" ]; then
-	export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
-fi
 
 
 
