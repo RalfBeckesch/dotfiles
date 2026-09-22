@@ -1,0 +1,30 @@
+[directory]
+truncation_length = 4
+truncation_symbol = '…/'
+
+[character]
+success_symbol = '[➜](bold green) '
+error_symbol = '[✗](bold red) '
+
+[hostname]
+ssh_only = false
+format = '[$ssh_symbol](bold blue) on [$hostname](bold red) '
+trim_at = '.companyname.com'
+disabled = false
+
+[jobs]
+symbol = '✦ '
+number_threshold = 2
+symbol_threshold = 1
+disabled = false
+
+[os]
+format = "on [($name )]($style)"
+style = "bold blue"
+disabled = false
+
+[sudo]
+style = 'bold green'
+# symbol = '👩‍💻 '
+symbol = '👷'
+disabled = false
