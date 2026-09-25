@@ -12,7 +12,9 @@ and is kept locally under `~/.local/share/chezmoi`.
 ```sh
 # ssh
 sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply git@github.com:RalfBeckesch/dotfiles.git
+```
 
+```sh
 # https
 sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply https://github.com/RalfBeckesch/dotfiles.git
 ```
