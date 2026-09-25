@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# non interactive? exit!
+[[ $- != *i* ]] && return
+
+scriptname=$(basename ${BASH_SOURCE[0]})
+scriptdirname=$(dirname ${BASH_SOURCE[0]})
+
+
+function debug () {
+    if [ -n "$DEBUG" ]; then
+        echo -e "[${scriptname}]: $*" >&2
+    fi
+}
+
+bashrc_debug="$HOME/.bashrc_debug"
+if [ -f "$bashrc_debug" ]; then
+	DEBUG="$(cat $bashrc_debug)"
+	if [ -n "$DEBUG" ]; then
+		debug "Debug enabled."
+	fi
+fi
+
+BASHRC_DIR="$HOME/.bashrc.d"
+debug "BASHRC_DIR: '$BASHRC_DIR'"
+if [ -d "$BASHRC_DIR" ]; then
+	for ext in $BASHRC_DIR/*sh; do
+		if [ -f "$ext" ]; then
+			debug "include '$ext'"
+			. $ext
+		fi
+	done
+else
+	debug"BASHRC_DIR: '$BASHRC_DIR' NOT FOUND!"
+fi
+

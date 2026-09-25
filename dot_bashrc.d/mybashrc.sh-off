@@ -1,0 +1,6 @@
+#!/bin/bash
+mybashrc=~/bin/mybashrc
+
+if [ -e "$mybashrc" ]; then
+	echo . $mybashrc
+fi
