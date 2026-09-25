@@ -10,7 +10,11 @@ and is kept locally under `~/.local/share/chezmoi`.
 ### Install script from chezmoi.io
 
 ```sh
+# ssh
 sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply git@github.com:RalfBeckesch/dotfiles.git
+
+# https
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply https://github.com/RalfBeckesch/dotfiles.git
 ```
 
 ### Install with your distros or cross-platform package manager first...
