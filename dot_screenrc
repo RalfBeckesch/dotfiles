@@ -1,0 +1,57 @@
+####
+##      .screenrc v1.5 - get yourself a useable work environment =)
+#       Written (w) 2003-2007 by Stephan Schmieder, <ssc@unixgu.ru>
+#############
+# $Id: screenrc-ssc 213 2010-08-11 20:37:29Z rb $
+#############
+# "activity in window #%n title: %t~"
+activity "%C -> %n%f %t activity!"
+# pass on the "beep" (CTRL-G) by adding a '~':
+bell "%C -> %n%f %t bell!~"
+# set colors for "messages" and "text marking"
+sorendition    kG
+# [hostname ][windowlist][month and day][time]
+caption always "%{WB}%H %{kG}%?%-Lw%?%{bw}%n*%f %t%?(%u)%?%{kG}%?%+Lw%? %88=%{YR}%m-%d %94=%{RY}%c%="
+
+# console-screensave, (!)doesn't lock(!)
+# idle 180 eval "screen cmatrix" "idle 0"
+
+nethack on
+# key bindings
+bind t screen -t top    0 top
+bind c screen -t sh     1 bash -l
+bind e screen -t email  2 ssh unixgu.ru -t screen -d -R -S email /usr/local/bin/mutt
+bind s screen -t silc   3 ssh unixgu.ru -t screen -d -R -S silc  /usr/local/bin/silc
+# play your music
+bind m screen -t music  4 sh -c 'echo -e "available bands:\n================"; ls ~/music/; echo -ne "\nWildcards \"*,?\" and groups \"{foo,bar}\" are supported.\nMake your choice: "; read REPLY; bash -c "mplayer -shuffle ~/music/$REPLY/*|grep Playing"; echo -ne "\033kmusic[EOF]\033\134"; read REPLY'
+# wget something with pseudo-interactive feedback (F=failed, C=completed)
+bind w screen -t wget   6 sh -c 'mkdir -p ~/downloads; cd ~/downloads; echo -n "URL?: "; read REPLY; wget --tries=23 --timeout=5 --waitretry=2 --continue "$REPLY" && echo -ne "\033kwget[C]\033\134" || echo -ne "\033kwget[F]\033\134"; read REPLY'
+
+# use F7 and F8 to cycle trough the windows
+bindkey -k k6 prev
+bindkey -k k7 next
+# unbind some keys
+bind .
+bind ^\
+bind \\
+bind K
+# termcap stuff
+termcapinfo xterm     ti@:te@
+# make the cursor show up in red:
+termcapinfo linux "ve=\E[?25h\E[?17;0;64c"
+# this makes screen work within rxvt on cygwin:
+termcapinfo rxvt-cygwin-native ti@:te@
+# scrollback buffer in lines
+defscrollback 1000
+# my shell
+shell bash
+# no copyright message
+startup_message off
+# show messages for 2 seconds
+msgwait 2
+# visual bell
+vbell on
+vbell_msg " *beep* "
+# don't remember what these do
+deflogin off
+silencewait 15
