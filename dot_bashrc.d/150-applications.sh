@@ -19,12 +19,10 @@ for i in $applications_dir/*sh; do
 		end_ns=$(date +%s%N)
 		elapsed_ns=$((end_ns - start_ns))
 		elapsed_s=$(awk -v ns="$elapsed_ns" 'BEGIN {printf "%.9f", ns / 1000000000}')
+		debug "\n\t---\n\t--- Dauer: '$i' \n\t---"
+		debug '\t---\t'$(printf '%s s (%d ns)\n' "$elapsed_s" "$elapsed_ns")
+		debug '\t---'
 	fi
-
-
-	debug "\n\t---\n\t--- Dauer: '$i' \n\t---"
-	debug '\t---\t'$(printf '%s s (%d ns)\n' "$elapsed_s" "$elapsed_ns")
-	debug '\t---'
 
 done
 

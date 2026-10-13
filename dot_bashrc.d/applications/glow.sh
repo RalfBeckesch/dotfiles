@@ -5,7 +5,7 @@ scriptdirname=$(dirname ${BASH_SOURCE[0]})
 
 if [ -n "$(command -v glow)" ]; then
 	debug "Loading 'glow' completion."
-	env "$(glow completion bash)"
+	eval "$(glow completion bash)"
 fi
 
 
