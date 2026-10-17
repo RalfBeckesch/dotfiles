@@ -18,8 +18,16 @@ number_threshold = 2
 symbol_threshold = 1
 disabled = false
 
+[username]
+disabled = false
+show_always = true
+format = "[$user]($style) "
+style_user = "bold blue"
+style_root = "bold red"
+
 [os]
-format = "on [($name )]($style)"
+# format = "on [($name )]($style)"
+format = "on [$symbol]($style)"
 style = "bold blue"
 disabled = false
 
