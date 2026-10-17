@@ -27,7 +27,7 @@ style_root = "bold red"
 
 [os]
 # format = "on [($name )]($style)"
-format = "on [$symbol]($style)"
+format = "on [$symbol($name )$symbol]($style)"
 style = "bold blue"
 disabled = false
 
