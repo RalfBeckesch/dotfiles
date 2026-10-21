@@ -20,8 +20,14 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply https://git
 ...then initialize chezmoi with the repository
 
 ```
-chezmoi init git@git.beckesch.it:beckesch/dotfiles.git
+chezmoi init REPO_LINK
 ```
+_Example:_ 
+```
+chezmoi init https://github.com/RalfBeckesch/dotfiles.git
+```
+
+
 ### Autosetup the files inside your devpods
 
 Alternatively, use the `setup.sh` script in this repository, which installs chezmoi
