@@ -9,7 +9,11 @@ under `~/.local/share/chezmoi`.
 ### Install script from chezmoi.io
 
 ```sh
-sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply git@git.beckesch.it:beckesch/dotfiles.git
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply REPO_LINK
+```
+_Example:_
+```sh
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply https://github.com/RalfBeckesch/dotfiles.git
 ```
 
 ### Install with your distros or cross-platform package manager first...
