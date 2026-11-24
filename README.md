@@ -12,7 +12,7 @@ under `~/.local/share/chezmoi`.
 
 ## Quick start (new machine)
 
-### Install script from chezmoi.io
+### Public dotfiles (one-command init)
 
 ```sh
 # SSH
@@ -22,22 +22,27 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply git@github.
 sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply https://github.com/RalfBeckesch/dotfiles.git
 ```
 
-### Install with your distros or cross-platform package manager
+This deploys shell config, aliases, tools **and** the wrapper scripts for
+companion repositories (`chezmoi-private` and `chezmoi-secrets`) into
+`~/.local/bin/`. After this completes, the companion instances are ready
+to be initialized — see [Multi-repository architecture](#multi-repository-architecture).
 
-```sh
-# SSH
-chezmoi init git@github.com:RalfBeckesch/dotfiles.git
+### Companion instances (after public repo is deployed)
 
-# HTTPS
-chezmoi init https://github.com/RalfBeckesch/dotfiles.git
+Once the public dotfiles are applied, the wrapper binaries are in place:
+
+```bash
+chezmoi-private init --apply git@git.beckesch.it:rb/chezmoi-private.git
+chezmoi-secrets init --apply git@git.beckesch.it:rb/chezmoi-secrets.git
 ```
 
-### Autosetup the files inside your devpods
+For the secrets instance you may need to set up an age key first —
+see [chezmoi-secrets bootstrap](#chezmoi-secrets).
 
-Alternatively, use the `setup.sh` script in this repository, which installs chezmoi
-and applies the dotfiles if that hasn't happened yet. The `setup.sh` is intended to be used as `devpod` quick setup.
+### Autosetup inside devpods
 
-see `setup.sh`
+Use `setup.sh` from this repository — it installs chezmoi and applies the
+public dotfiles without asking for a repo URL (devpods only).
 
 ### Use your distros package manager
 ```
@@ -164,25 +169,15 @@ exec chezmoi \
 
 **Bootstrap on a new machine:**
 
+Prerequisites: the public dotfiles must be applied first (the wrapper binary
+`chezmoi-private` lands at `~/.local/bin/chezmoi-private` via the public repo).
+
 ```bash
-# 1. Create the directory structure
-mkdir -p ~/.local/bin ~/.config/chezmoi-private ~/.local/share/chezmoi-private
+# Initialize and apply from the remote repository
+chezmoi-private init --apply git@git.beckesch.it:rb/chezmoi-private.git
 
-# 2. Install the wrapper (this repo provides it as bin/executable_chezmoi-private.sh)
-#    Copy it manually or let the public dotfiles repo deploy it:
-cp /path/to/dotfiles/bin/executable_chezmoi-private.sh ~/.local/bin/chezmoi-private
-chmod 755 ~/.local/bin/chezmoi-private
-
-# 3. Create an empty local config
-touch ~/.config/chezmoi-private/chezmoi.toml
-chmod 600 ~/.config/chezmoi-private/chezmoi.toml
-
-# 4. Initialize from the remote repository
-chezmoi-private init git@git.beckesch.it:rb/chezmoi-private.git
-
-# 5. Review before applying — personal config may contain host-specific values
+# Review before applying — personal config may contain host-specific values
 chezmoi-private diff
-chezmoi-private apply
 ```
 
 **Daily workflow:**
@@ -234,7 +229,6 @@ on each host — it is not distributed through the repository.
 - A private repository is an access barrier, not encryption — do not commit
   secrets (API keys, passwords, tokens) here
 - `private_` in chezmoi filenames = restrictive file permissions, not encryption
-- SSH private keys and certificates are provisioned separately, never committed
 
 ---
 
@@ -272,17 +266,10 @@ state file, keeping it fully isolated from the public and private instances.
 
 #### Bootstrap on a new machine
 
-**Step 1 — Create the directories and install the wrapper:**
+Prerequisites: the public dotfiles must be applied first (the wrapper binary
+`chezmoi-secrets` lands at `~/.local/bin/chezmoi-secrets` via the public repo).
 
-```bash
-mkdir -p ~/.local/bin ~/.config/chezmoi-secrets ~/.local/share/chezmoi-secrets
-chmod 700 ~/.config/chezmoi-secrets ~/.local/share/chezmoi-secrets
-
-cp /path/to/dotfiles/bin/executable_chezmoi-secrets.sh ~/.local/bin/chezmoi-secrets
-chmod 755 ~/.local/bin/chezmoi-secrets
-```
-
-**Step 2 — Generate an age keypair (first host only):**
+**Step 1 — Generate an age keypair (first host only):**
 
 ```bash
 (
@@ -297,14 +284,14 @@ for the config. **Back up `age-key.txt` separately** (password manager,
 encrypted offline backup). Without it, encrypted files in the repository
 are unrecoverable.
 
-**Step 3 — Create the local config:**
+**Step 2 — Create the local config:**
 
 ```bash
 touch ~/.config/chezmoi-secrets/chezmoi.toml
 chmod 600 ~/.config/chezmoi-secrets/chezmoi.toml
 ```
 
-**Step 4 — Configure encryption:**
+**Step 3 — Configure encryption:**
 
 ```toml
 # ~/.config/chezmoi-secrets/chezmoi.toml
@@ -323,7 +310,7 @@ useBuiltinAge = true
 files in the source directory are not automatically encrypted. Always verify
 before committing.
 
-**Step 5 — Initialize the repository and apply:**
+**Step 4 — Initialize the repository and apply:**
 
 ```bash
 chezmoi-secrets init git@git.beckesch.it:rb/chezmoi-secrets.git
@@ -415,7 +402,6 @@ Important limits with per-host keys:
 #### Checklist for a new secrets host
 
 - [ ] Secrets repository is private
-- [ ] Wrapper uses dedicated config, source, and state file
 - [ ] age key created and backed up separately
 - [ ] Private age key is NOT in the repository
 - [ ] `[add] encrypt = true` is set
