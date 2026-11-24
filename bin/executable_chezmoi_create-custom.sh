@@ -1,4 +1,6 @@
 
+#!/bin/sh
+
 name="$1"
 prefix="chezmoi"
 postfix="sh"
@@ -8,26 +10,26 @@ config="$HOME/.config/chezmoi-$name/chezmoi.toml"
 dir="$HOME/.local/share/chezmoi-$name"
 
 if [ -e "$fn" ]; then
-	echo -e "\n'$fn' already exists!\n"
+	printf '\n'"'$fn' already exists!\n"'\n'
 	exit 1
 fi
 
 if [ -e "$config" ]; then
-	echo -e "\n'$config' already exists!\n"
+	printf '\n'"'$config' already exists!\n"'\n'
 	exit 1
 fi
 
 if [ -e "$dir" ]; then
-	echo -e "\n'$dir' already exists!\n"
+	printf '\n'"'$dir' already exists!\n"'\n'
 	exit 1
 fi
 
-cat <<EOF >> $fn
+cat <<EOF > $fn
 #!/bin/sh
 exec chezmoi \
-  --config "$HOME/.config/chezmoi-private/chezmoi.toml" \
-  --source "$HOME/.local/share/chezmoi-private" \
-  "$@"
+  --config "$HOME/.config/chezmoi-$name/chezmoi.toml" \
+  --source "$HOME/.local/share/chezmoi-$name" \
+  "\$@"
 EOF
 
 chmod 755 $fn
