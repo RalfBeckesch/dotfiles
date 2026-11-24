@@ -22,8 +22,8 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply git@github.
 **Optional companion instances** (run after the public repo is applied):
 
 ```bash
-chezmoi-private init --apply git@git.beckesch.it:rb/chezmoi-private.git   # see ## chezmoi-private
-chezmoi-secrets init --apply git@git.beckesch.it:rb/chezmoi-secrets.git   # see ## chezmoi-secrets (age key may be needed)
+chezmoi-private init --apply <your-private-repo-url>   # see ## chezmoi-private
+chezmoi-secrets init --apply <your-secrets-repo-url>   # see ## chezmoi-secrets (age key may be needed)
 ```
 
 ### Autosetup inside devpods
