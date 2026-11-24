@@ -12,32 +12,19 @@ under `~/.local/share/chezmoi`.
 
 ## Quick start (new machine)
 
-### Public dotfiles (one-command init)
+One-command init — deploys shell config, aliases, tools **and** the
+wrapper binaries for the companion repositories into `~/.local/bin/`:
 
 ```sh
-# SSH
-sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply git@github.com:RalfBeckesch/dotfiles.git
-
-# HTTPS (no SSH key required)
-sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply https://github.com/RalfBeckesch/dotfiles.git
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply git@github.com/RalfBeckesch/dotfiles.git
 ```
 
-This deploys shell config, aliases, tools **and** the wrapper scripts for
-companion repositories (`chezmoi-private` and `chezmoi-secrets`) into
-`~/.local/bin/`. After this completes, the companion instances are ready
-to be initialized — see [Multi-repository architecture](#multi-repository-architecture).
-
-### Companion instances (after public repo is deployed)
-
-Once the public dotfiles are applied, the wrapper binaries are in place:
+**Optional companion instances** (run after the public repo is applied):
 
 ```bash
-chezmoi-private init --apply git@git.beckesch.it:rb/chezmoi-private.git
-chezmoi-secrets init --apply git@git.beckesch.it:rb/chezmoi-secrets.git
+chezmoi-private init --apply git@git.beckesch.it:rb/chezmoi-private.git   # see ## chezmoi-private
+chezmoi-secrets init --apply git@git.beckesch.it:rb/chezmoi-secrets.git   # see ## chezmoi-secrets (age key may be needed)
 ```
-
-For the secrets instance you may need to set up an age key first —
-see [chezmoi-secrets bootstrap](#chezmoi-secrets).
 
 ### Autosetup inside devpods
 
@@ -152,7 +139,7 @@ Two wrapper scripts in `bin/` provide dedicated command names for the companion
 repositories. Each wrapper invokes `chezmoi` with the correct `--config` and
 `--source` flags so every command targets the right instance.
 
-### chezmoi-private
+## chezmoi-private
 
 **Purpose:** Version-controlled private configuration that does not belong in the
 public dotfiles repo — SSH config, Hermes configuration, personal scripts.
@@ -230,9 +217,7 @@ on each host — it is not distributed through the repository.
   secrets (API keys, passwords, tokens) here
 - `private_` in chezmoi filenames = restrictive file permissions, not encryption
 
----
-
-### chezmoi-secrets
+## chezmoi-secrets
 
 **Purpose:** Version-controlled encrypted secrets — API tokens, `.env` files,
 and other credentials. File contents are encrypted with [age](https://age-encryption.org/)
@@ -252,7 +237,7 @@ exec chezmoi \
 Note the `--persistent-state` flag — the secrets instance has its own BoltDB
 state file, keeping it fully isolated from the public and private instances.
 
-#### Security model and limitations
+### Security model and limitations
 
 - In the source directory and Git repository, file contents are encrypted.
 - When applied, chezmoi decrypts to the target path. Applications read plaintext.
@@ -264,7 +249,7 @@ state file, keeping it fully isolated from the public and private instances.
 - A private repository is an additional access barrier, not a substitute for encryption.
 - Plaintext secrets once committed stay in Git history forever — rotate them.
 
-#### Bootstrap on a new machine
+### Bootstrap on a new machine
 
 Prerequisites: the public dotfiles must be applied first (the wrapper binary
 `chezmoi-secrets` lands at `~/.local/bin/chezmoi-secrets` via the public repo).
@@ -318,7 +303,7 @@ chezmoi-secrets diff    # verify before applying
 chezmoi-secrets apply
 ```
 
-#### Adding a secret
+### Adding a secret
 
 ```bash
 # Add an existing .env file
@@ -336,7 +321,7 @@ git -C ~/.local/share/chezmoi-secrets diff --cached
 # Should show encrypted content, not plaintext
 ```
 
-#### Daily workflow
+### Daily workflow
 
 ```bash
 # Edit a secret safely — chezmoi decrypts to a private temp dir, opens your
@@ -359,7 +344,7 @@ git -C ~/.local/share/chezmoi-secrets pull --ff-only
 chezmoi-secrets apply ~/.hermes/.env
 ```
 
-#### Multi-host setup (shared or per-host keys)
+### Multi-host setup (shared or per-host keys)
 
 **Shared key** — simplest model: copy `age-key.txt` to each host via a secure
 channel (password manager, encrypted USB). Use the same `recipient` in every
@@ -388,7 +373,7 @@ Important limits with per-host keys:
   no per-host file separation within one repo. For separate trust domains, use
   separate repos or a file-level encryption strategy.
 
-#### What this setup does NOT provide
+### What this setup does NOT provide
 
 - No central password manager integration
 - No time-limited or dynamically generated secrets
@@ -399,7 +384,7 @@ Important limits with per-host keys:
 - No passphrase-protected age identity — the local key file relies on
   filesystem permissions and a secure backup strategy
 
-#### Checklist for a new secrets host
+### Checklist for a new secrets host
 
 - [ ] Secrets repository is private
 - [ ] age key created and backed up separately
