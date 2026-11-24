@@ -134,12 +134,12 @@ without conflict because no target file is managed by more than one instance.
 
 | Target file | Managed by |
 |---|---|
-| `~/.bashrc`, public shell snippets | Public repo (`chezmoi`) |
-| `~/.ssh/config` | Private repo (`chezmoi-private`) |
-| `~/.ssh/authorized_keys` | Private repo (`chezmoi-private`) |
-| `~/.hermes/config.yaml` | Private repo (`chezmoi-private`) |
-| Private SSH key files | Separate provisioning (never in any repo) |
-| `~/.hermes/.env` | Secrets repo (`chezmoi-secrets`) |
+|| `~/.bashrc`, public shell snippets | Public repo (`chezmoi`) |
+|| `~/.ssh/config` | Private repo (`chezmoi-private`) |
+|| `~/.ssh/authorized_keys` | Secrets repo (`chezmoi-secrets`, age-encrypted) |
+|| `~/.hermes/config.yaml` | Private repo (`chezmoi-private`) |
+|| Private SSH key files | Secrets repo (`chezmoi-secrets`, age-encrypted) |
+|| `~/.hermes/.env` | Secrets repo (`chezmoi-secrets`) |
 
 ## Companion repositories
 
