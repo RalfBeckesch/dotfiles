@@ -22,8 +22,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply git@github.
 sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply https://github.com/RalfBeckesch/dotfiles.git
 ```
 
-### Install with your distros or cross-platform package manager first...
-...then initialize chezmoi with the repository
+### Install with your distros or cross-platform package manager
 
 ```sh
 # SSH
