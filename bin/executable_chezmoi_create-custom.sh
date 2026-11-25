@@ -5,6 +5,12 @@ name="$1"
 prefix="chezmoi"
 postfix="sh"
 
+if [ -z "$name" ]; then
+	echo -e "\n$(basename $0) realm\n"
+	exit 0
+fi
+
+
 fn="$HOME/bin/$prefix-$name.$postfix"
 config="$HOME/.config/chezmoi-$name/chezmoi.toml"
 dir="$HOME/.local/share/chezmoi-$name"
